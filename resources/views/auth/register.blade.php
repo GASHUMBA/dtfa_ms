@@ -28,6 +28,19 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+
+        <!-- Role Dropdown -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Role')" />
+            <select id="role" name="role" class="block mt-1 w-full" required>
+                <option value="">Select a role</option>
+                @foreach(Spatie\Permission\Models\Role::where('guard_name', 'web')->orderBy('name')->get() as $role)
+                    <option value="{{ $role->name }}" @if(old('role') == $role->name) selected @endif>{{ ucfirst($role->name) }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />

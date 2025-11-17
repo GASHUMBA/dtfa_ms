@@ -8,6 +8,16 @@
     </div>
 
     <form method="POST" action="{{ route('admin.users.store') }}" class="bg-white dark:bg-neutral-900 shadow rounded-lg p-6 space-y-4">
+        <div>
+            <label class="block text-sm font-medium mb-1">Role(s)</label>
+            <select name="roles[]" class="w-full border rounded px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700" multiple required>
+                @foreach ($roles as $role)
+                    <option value="{{ $role }}" @if(collect(old('roles'))->contains($role)) selected @endif>{{ ucfirst($role) }}</option>
+                @endforeach
+            </select>
+            <small class="text-xs text-slate-500">Hold Ctrl (Windows) or Command (Mac) to select multiple roles.</small>
+            @error('roles')<p class="text-sm text-red-600 mt-1">{{ $message }}</p>@enderror
+        </div>
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
